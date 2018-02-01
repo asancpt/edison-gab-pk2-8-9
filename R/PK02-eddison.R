@@ -1,12 +1,4 @@
-# setwd("D:/Gab (2)")
-
-library(tidyverse)
-library(wnl)
-library(NonCompart)
-
-.libPaths() %>% 
-  map(dir) %>%
-  print()
+source('index.R')
 
 PK02 = read.csv("data-raw/PK02.csv", skip=1)
 colnames(PK02) = c("TIME","DV")
@@ -16,11 +8,16 @@ PK02
 dPK02 = PK02
 
 ## Plot
+
+jpeg(file = 'result/test1.png', type='cairo')
 plot(DV2 ~ TIME, data=PK02, type="o")
 lines(DV ~ TIME, data=PK02, type="o", col="red")
-dev.new()
+dev.off()
+#dev.new()
+jpeg(file = 'result/test2.png', type = 'cairo')
 plot(log(DV2) ~ TIME, data=PK02, type="o")
 lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
+dev.off()
 
 ## NCA
 R1 = sNCA(PK02$TIME, PK02$DV2, dose=100, adm="Bolus", doseUnit="ug", timeUnit="min") ; R1
@@ -72,5 +69,7 @@ colnames(PK02) = c("TIME", "DV", "DV2")
 nlr(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
 wnl5(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
 
+# print(dir())
 
+# system('convert -density 300 Rplots.pdf result/Rplots.png')
 
