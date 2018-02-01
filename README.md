@@ -325,8 +325,6 @@ wnl5(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
 
 ## Figures
 
-<!--
 ![](figure1.png)
 
 ![](figure2.png)
--->

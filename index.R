@@ -23,6 +23,7 @@ lapply(libraries, library, character.only = TRUE)
 knitr::knit('README.Rmd')
 markdownToHTML('README.md', "result/README.html", 
                options = c("toc", "mathjax"))
+system('cp result/figure1.png result/figure2.png ./')
 
 # system('cp README.md result')
 
@@ -37,5 +38,4 @@ markdownToHTML('README.md', "result/README.html",
 
 # render('README.Rmd', output_file = 'result/README.html')
 
-# system('cp README.html figure1.png figure2.png result')
 
