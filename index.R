@@ -1,5 +1,6 @@
 #!/SYSTEM/R/3.3.3/bin/Rscript
-Sys.getenv("RSTUDIO_PANDOC")
+Sys.setenv(RSTUDIO_PANDOC="/SYSTEM/pandoc/1.17.0.3/bin")
+print(Sys.getenv("RSTUDIO_PANDOC"))
 
 library(magrittr)
 
