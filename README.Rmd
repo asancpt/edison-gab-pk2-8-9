@@ -6,6 +6,10 @@ output:
     toc: yes
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
 # PK2- One-compartment oral dosing
 
 이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
@@ -16,6 +20,7 @@ output:
 ```
 
 ## Figures
+
 <!--
 ![](figure1.png)
 

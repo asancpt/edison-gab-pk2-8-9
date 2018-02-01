@@ -18,10 +18,15 @@ if (length(intersect(dir(), 'result')) == 0) system('mkdir result')
 
 # setup ----
 
-libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'rmarkdown') # lapply(libraries, install.packages)
+libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'markdown') # lapply(libraries, install.packages)
 lapply(libraries, library, character.only = TRUE)
-render('README.Rmd', output_file = 'README.html')
-system('cp README.html result')
+knitr::knit('README.Rmd')
+markdownToHTML('README.md', "result/README.html", 
+               options = c("toc", "mathjax"))
+
+# system('cp README.md result')
+
+# render('README.Rmd', output_file = 'README.html')
 
 # system('cp R/PK02.R README.Rmd result')
 
