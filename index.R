@@ -2,6 +2,10 @@
 Sys.setenv(RSTUDIO_PANDOC="/SYSTEM/pandoc/1.17.0.3/bin")
 print(Sys.getenv("RSTUDIO_PANDOC"))
 
+print(capabilities())
+print(sessionInfo())
+
+
 library(magrittr)
 
 # init ----

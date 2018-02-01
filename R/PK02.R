@@ -9,15 +9,15 @@ dPK02 = PK02
 
 ## Plot
 
-jpeg(file = 'result/figure1.png', type='cairo')
-plot(DV2 ~ TIME, data=PK02, type="o")
-lines(DV ~ TIME, data=PK02, type="o", col="red")
-dev.off()
-
-jpeg(file = 'result/figure2.png', type = 'cairo')
-plot(log(DV2) ~ TIME, data=PK02, type="o")
-lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
-dev.off()
+# jpeg(file = 'result/figure1.png', type='cairo')
+# plot(DV2 ~ TIME, data=PK02, type="o")
+# lines(DV ~ TIME, data=PK02, type="o", col="red")
+# dev.off()
+# 
+# jpeg(file = 'result/figure2.png', type = 'cairo')
+# plot(log(DV2) ~ TIME, data=PK02, type="o")
+# lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
+# dev.off()
 
 ## NCA
 R1 = sNCA(PK02$TIME, PK02$DV2, dose=100, adm="Bolus", doseUnit="ug", timeUnit="min") ; R1
