@@ -10,6 +10,7 @@ output:
 
 이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
 소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
+에디슨 앱은 <https://www.edison.re.kr/simulation> 에서 확인하세요.
 
 
 ```r
@@ -44,7 +45,7 @@ dPK02 = PK02
 
 ## Plot
 
-jpeg(file = 'result/test1.png', type='cairo')
+jpeg(file = 'result/figure1.png', type='cairo')
 plot(DV2 ~ TIME, data=PK02, type="o")
 lines(DV ~ TIME, data=PK02, type="o", col="red")
 dev.off()
@@ -56,8 +57,7 @@ dev.off()
 ```
 
 ```r
-#dev.new()
-jpeg(file = 'result/test2.png', type = 'cairo')
+jpeg(file = 'result/figure2.png', type = 'cairo')
 plot(log(DV2) ~ TIME, data=PK02, type="o")
 lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
 dev.off()
@@ -335,15 +335,9 @@ wnl5(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
 ## [1] 34.53676
 ```
 
-```r
-# print(dir())
-
-# system('convert -density 300 Rplots.pdf result/Rplots.png')
-```
-
 ## Figures
 
-![](result/test1.png)
+![](result/figure1.png)
 
-![](result/test2.png)
+![](result/figure2.png)
 
