@@ -1,6 +1,6 @@
-setwd("D:/Gab (2)")
-require(wnl)
-dPK09 = read.csv("PK09.csv", skip=1, as.is=TRUE)
+# setwd("D:/Gab (2)")
+
+dPK09 = read.csv("data-raw/PK09.csv", skip=1, as.is=TRUE)
 colnames(dPK09) = c("TIME", "DV", "CMT") ; dPK09
 dPK09 = dPK09[dPK09[,"DV"] != "missing",] ; dPK09
 dPK09[,"DV"] = as.numeric(dPK09[,"DV"]) ; dPK09

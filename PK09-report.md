@@ -1,191 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-<title>PK09 - Modeling of fraction absorbed and nonlinear bioavailability across the liver</title>
-
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
+---
+# bibliography: 'bib/manual.bib'
+output:
+  html_document:
+    keep_md: yes
+    toc: yes
+---
 
 
 
+# PK09 - Modeling of fraction absorbed and nonlinear bioavailability across the liver
+
+이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
+소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
+에디슨 앱은 <https://www.edison.re.kr/simulation> 에서 확인할 수 있습니다.
 
 
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
+```r
+# setwd("D:/Gab (2)")
 
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
-}
+dPK09 = read.csv("data-raw/PK09.csv", skip=1, as.is=TRUE)
+colnames(dPK09) = c("TIME", "DV", "CMT") ; dPK09
+```
 
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 {
-   font-size:2.2em;
-}
-
-h2 {
-   font-size:1.8em;
-}
-
-h3 {
-   font-size:1.4em;
-}
-
-h4 {
-   font-size:1.0em;
-}
-
-h5 {
-   font-size:0.9em;
-}
-
-h6 {
-   font-size:0.8em;
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre, img {
-  max-width: 100%;
-}
-pre {
-  overflow-x: auto;
-}
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code {
-  font-size: 92%;
-  border: 1px solid #ccc;
-}
-
-code[class] {
-  background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
-</style>
-
-
-
-</head>
-
-<body>
-<div id="toc">
-<div id="toc_header">Table of Contents</div>
-<ul>
-<li>
-<a href="#toc_0">PK09 - Modeling of fraction absorbed and nonlinear bioavailability across the liver</a>
-</li>
-</ul>
-</div>
-
-
-<h1 id="toc_0">PK09 - Modeling of fraction absorbed and nonlinear bioavailability across the liver</h1>
-
-<p>이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.<br>
-소스 코드는 <a href="https://github.com/asancpt/edison-gab">깃헙</a>에 올라와 있습니다.
-에디슨 앱은 <a href="https://www.edison.re.kr/simulation">https://www.edison.re.kr/simulation</a> 에서 확인할 수 있습니다.</p>
-
-<pre><code class="r"># setwd(&quot;D:/Gab (2)&quot;)
-
-dPK09 = read.csv(&quot;data-raw/PK09.csv&quot;, skip=1, as.is=TRUE)
-colnames(dPK09) = c(&quot;TIME&quot;, &quot;DV&quot;, &quot;CMT&quot;) ; dPK09
-</code></pre>
-
-<pre><code>##        TIME      DV CMT
+```
+##        TIME      DV CMT
 ## 1   0.03333    4.77   1
 ## 2   0.13333    3.43   1
 ## 3   0.25000     2.7   1
@@ -210,12 +48,14 @@ colnames(dPK09) = c(&quot;TIME&quot;, &quot;DV&quot;, &quot;CMT&quot;) ; dPK09
 ## 22  6.00000    2.25   2
 ## 23  8.00000    1.96   2
 ## 24 23.00000   0.141   2
-</code></pre>
+```
 
-<pre><code class="r">dPK09 = dPK09[dPK09[,&quot;DV&quot;] != &quot;missing&quot;,] ; dPK09
-</code></pre>
+```r
+dPK09 = dPK09[dPK09[,"DV"] != "missing",] ; dPK09
+```
 
-<pre><code>##        TIME     DV CMT
+```
+##        TIME     DV CMT
 ## 1   0.03333   4.77   1
 ## 2   0.13333   3.43   1
 ## 3   0.25000    2.7   1
@@ -235,12 +75,14 @@ colnames(dPK09) = c(&quot;TIME&quot;, &quot;DV&quot;, &quot;CMT&quot;) ; dPK09
 ## 22  6.00000   2.25   2
 ## 23  8.00000   1.96   2
 ## 24 23.00000  0.141   2
-</code></pre>
+```
 
-<pre><code class="r">dPK09[,&quot;DV&quot;] = as.numeric(dPK09[,&quot;DV&quot;]) ; dPK09
-</code></pre>
+```r
+dPK09[,"DV"] = as.numeric(dPK09[,"DV"]) ; dPK09
+```
 
-<pre><code>##        TIME     DV CMT
+```
+##        TIME     DV CMT
 ## 1   0.03333 4.7700   1
 ## 2   0.13333 3.4300   1
 ## 3   0.25000 2.7000   1
@@ -260,9 +102,10 @@ colnames(dPK09) = c(&quot;TIME&quot;, &quot;DV&quot;, &quot;CMT&quot;) ; dPK09
 ## 22  6.00000 2.2500   2
 ## 23  8.00000 1.9600   2
 ## 24 23.00000 0.1410   2
-</code></pre>
+```
 
-<pre><code class="r"># Dosing
+```r
+# Dosing
 # infusion 2 / 0.0056hr
 # oral 6
 
@@ -270,49 +113,52 @@ QH = 3.3
 VH = 0.02
 
 require(deSolve)
-</code></pre>
+```
 
-<pre><code>## Loading required package: deSolve
-</code></pre>
+```
+## Loading required package: deSolve
+```
 
-<pre><code class="r">ivPKde = function(t, y, p)
+```r
+ivPKde = function(t, y, p)
 {
-  if (t &lt; 0.0056) {
+  if (t < 0.0056) {
     RateIn = 357.1429 # 2/0.0056
   } else {
     RateIn = 0
   }
-  CL = p[&quot;Vmax&quot;]/(p[&quot;Km&quot;] + y[4])
-  dy1dt = -p[&quot;Ka&quot;]*y[1]                           # absorption, gut comp
-  dy2dt = (RateIn - QH*(y[2] - y[4]) - p[&quot;Cld&quot;]*(y[2] - y[3]))/p[&quot;Vc&quot;] # central, plasma
-  dy3dt = (p[&quot;Cld&quot;]*(y[2] - y[3]))/p[&quot;Vt&quot;]                # peripheral, tissue
-  dy4dt = (p[&quot;Ka&quot;]*y[1] + QH*(y[2] - y[4]) - CL*y[4])/VH  # hepatic comp
+  CL = p["Vmax"]/(p["Km"] + y[4])
+  dy1dt = -p["Ka"]*y[1]                           # absorption, gut comp
+  dy2dt = (RateIn - QH*(y[2] - y[4]) - p["Cld"]*(y[2] - y[3]))/p["Vc"] # central, plasma
+  dy3dt = (p["Cld"]*(y[2] - y[3]))/p["Vt"]                # peripheral, tissue
+  dy4dt = (p["Ka"]*y[1] + QH*(y[2] - y[4]) - CL*y[4])/VH  # hepatic comp
   return(list(c(dy1dt, dy2dt, dy3dt, dy4dt)))
 }
 
 poPKde = function(t, y, p)
 {
-  CL = p[&quot;Vmax&quot;]/(p[&quot;Km&quot;] + y[4])
-  if (t &lt; p[&quot;Tlag&quot;]) {
+  CL = p["Vmax"]/(p["Km"] + y[4])
+  if (t < p["Tlag"]) {
     Ka = 0
   } else {
-    Ka = p[&quot;Ka&quot;]
+    Ka = p["Ka"]
   }
   dy1dt = -Ka*y[1]                           # absorption, gut comp
-  dy2dt = (-QH*(y[2] - y[4]) - p[&quot;Cld&quot;]*(y[2] - y[3]))/p[&quot;Vc&quot;] # central, plasma
-  dy3dt = (p[&quot;Cld&quot;]*(y[2] - y[3]))/p[&quot;Vt&quot;]                # peripheral, tissue
+  dy2dt = (-QH*(y[2] - y[4]) - p["Cld"]*(y[2] - y[3]))/p["Vc"] # central, plasma
+  dy3dt = (p["Cld"]*(y[2] - y[3]))/p["Vt"]                # peripheral, tissue
   dy4dt = (Ka*y[1] + QH*(y[2] - y[4]) - CL*y[4])/VH  # hepatic comp
   return(list(c(dy1dt, dy2dt, dy3dt, dy4dt)))
 }
 
 Dpo = 6
 
-Times1 = c(0, dPK09[dPK09[,&quot;CMT&quot;]==1,&quot;TIME&quot;]) # IV dosing
+Times1 = c(0, dPK09[dPK09[,"CMT"]==1,"TIME"]) # IV dosing
 iTime1 = 2:length(Times1)
 lsoda(y=c(0, 0, 0, 0), times=Times1, func=ivPKde, parms=c(Vc=0.34, Cld=1.84, Vt=0.38, Vmax=0.13, Km=0.31, Ka=11.3, Tlag=0.062))
-</code></pre>
+```
 
-<pre><code>##        time             1          2          3          4
+```
+##        time             1          2          3          4
 ## 1   0.00000  0.000000e+00 0.00000000 0.00000000 0.00000000
 ## 2   0.03333  0.000000e+00 4.78801443 0.71361471 4.85686925
 ## 3   0.13333  0.000000e+00 3.44439880 1.95760268 3.45911321
@@ -324,14 +170,16 @@ lsoda(y=c(0, 0, 0, 0), times=Times1, func=ivPKde, parms=c(Vc=0.34, Cld=1.84, Vt=
 ## 9   8.00000  1.310328e-22 1.47179246 1.50170270 1.44024713
 ## 10 20.00000  2.928280e-24 0.14272172 0.15381219 0.13129230
 ## 11 23.00000 -1.079337e-23 0.04295274 0.04715076 0.03868535
-</code></pre>
+```
 
-<pre><code class="r">Times2 = c(0, dPK09[dPK09[,&quot;CMT&quot;]==2,&quot;TIME&quot;]) # oral dosing
+```r
+Times2 = c(0, dPK09[dPK09[,"CMT"]==2,"TIME"]) # oral dosing
 iTime2 = 2:length(Times2)
 lsoda(y=c(0.38*Dpo, 0, 0, 0), times=Times2, func=poPKde, parms=c(Vc=0.34, Cld=1.84, Vt=0.38, Vmax=0.13, Km=0.31, Ka=11.3, Tlag=0.062))
-</code></pre>
+```
 
-<pre><code>##        time             1         2          3         4
+```
+##        time             1         2          3         4
 ## 1   0.00000  2.280000e+00 0.0000000 0.00000000 0.0000000
 ## 2   0.08333  1.791667e+00 0.9725510 0.04167281 6.9633459
 ## 3   0.25000  2.724704e-01 3.6085169 1.75268955 4.5749284
@@ -342,9 +190,10 @@ lsoda(y=c(0.38*Dpo, 0, 0, 0), times=Times2, func=poPKde, parms=c(Vc=0.34, Cld=1.
 ## 8   6.00000 -2.754964e-11 2.1341061 2.16575251 2.1007031
 ## 9   8.00000  3.453672e-11 1.8313651 1.86235200 1.7986670
 ## 10 23.00000 -2.603293e-13 0.1164369 0.12600530 0.1066041
-</code></pre>
+```
 
-<pre><code class="r">fPK09 = function(THETA)
+```r
+fPK09 = function(THETA)
 {
   Ka   = THETA[1]
   Vc   = THETA[2]
@@ -360,13 +209,14 @@ lsoda(y=c(0.38*Dpo, 0, 0, 0), times=Times2, func=poPKde, parms=c(Vc=0.34, Cld=1.
   return(c(Fs1[iTime1,3], Fs2[iTime2,3]))
 }
 
-nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot;Km&quot;, &quot;Vmax&quot;, &quot;Cld&quot;, &quot;Tlag&quot;, &quot;Fa&quot;),
+nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"),
      IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5),
      LB=c(0, 0.001, 0.001, 0, 0, 0, 0, 0),
-     UB=c(30, 1, 2, 1, 1, 4, 1, 1), Error=&quot;P&quot;)
-</code></pre>
+     UB=c(30, 1, 2, 1, 1, 4, 1, 1), Error="P")
+```
 
-<pre><code>## $Est
+```
+## $Est
 ##            Ka         Vc        Vt          Km        Vmax        Cld
 ## PE  11.919312 0.33921933 0.3887430  0.19659989 0.113250071  1.8714891
 ## SE   3.341325 0.03010223 0.0310253  0.03329911 0.004172073  0.4031147
@@ -427,15 +277,17 @@ nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot
 ## 
 ## $AICc
 ## [1] -2.239728
-</code></pre>
+```
 
-<pre><code class="r">nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot;Km&quot;, &quot;Vmax&quot;, &quot;Cld&quot;, &quot;Tlag&quot;, &quot;Fa&quot;),
+```r
+nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"),
      IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5),
      LB=c(0, 0.001, 0.001, 0, 0, 0, 0, 0),
      UB=c(30, 1, 2, 1, 1, 4, 1, 1))
-</code></pre>
+```
 
-<pre><code>## $Est
+```
+## $Est
 ##            Ka         Vc         Vt          Km        Vmax        Cld
 ## PE  10.371225 0.34342421 0.41845115  0.06814838 0.101592928  1.7525004
 ## SE   1.596033 0.01427099 0.02181435  0.05365431 0.006652001  0.2082989
@@ -496,35 +348,44 @@ nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot
 ## 
 ## $AICc
 ## [1] 10.82145
-</code></pre>
+```
 
-<pre><code class="r">nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot;Km&quot;, &quot;Vmax&quot;, &quot;Cld&quot;, &quot;Tlag&quot;, &quot;Fa&quot;), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error=&quot;C&quot;)
-</code></pre>
+```r
+nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error="C")
+```
 
-<pre><code>## Warning in sqrt(diag(e$Cov)): NaNs produced
-</code></pre>
+```
+## Warning in sqrt(diag(e$Cov)): NaNs produced
+```
 
-<pre><code>## Warning in sqrt(1/diag(V)): NaNs produced
-</code></pre>
+```
+## Warning in sqrt(1/diag(V)): NaNs produced
+```
 
-<pre><code>## Warning in cov2cor(e$Cov): diag(.) had 0 or NA entries; non-finite result
+```
+## Warning in cov2cor(e$Cov): diag(.) had 0 or NA entries; non-finite result
 ## is doubtful
-</code></pre>
+```
 
-<pre><code>## Error in eigen(e$Correl): infinite or missing values in &#39;x&#39;
-</code></pre>
+```
+## Error in eigen(e$Correl): infinite or missing values in 'x'
+```
 
-<pre><code class="r">e$PE
-</code></pre>
+```r
+e$PE
+```
 
-<pre><code>##  [1] 1.190532e+01 3.440102e-01 3.895294e-01 1.681051e-01 1.101395e-01
+```
+##  [1] 1.190532e+01 3.440102e-01 3.895294e-01 1.681051e-01 1.101395e-01
 ##  [6] 1.768973e+00 6.281812e-02 3.732787e-01 5.447203e-05 3.451288e-03
-</code></pre>
+```
 
-<pre><code class="r">wnl5(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot;Km&quot;, &quot;Vmax&quot;, &quot;Cld&quot;, &quot;Tlag&quot;, &quot;Fa&quot;), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error=&quot;P&quot;)
-</code></pre>
+```r
+wnl5(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error="P")
+```
 
-<pre><code>## $PE
+```
+## $PE
 ##          Ka          Vc          Vt          Km        Vmax         Cld 
 ## 10.41419059  0.34329904  0.41811580  0.07354451  0.10206254  1.75701281 
 ##        Tlag          Fa 
@@ -552,8 +413,5 @@ nlr(fPK09, dPK09, pNames=c(&quot;Ka&quot;, &quot;Vc&quot;, &quot;Vt&quot;, &quot
 ## 
 ## $SBC
 ## [1] -1.598531
-</code></pre>
+```
 
-</body>
-
-</html>

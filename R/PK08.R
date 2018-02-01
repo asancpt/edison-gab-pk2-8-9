@@ -1,12 +1,17 @@
-setwd("D:/Gab (2)")
-require(wnl)
-dPK08 = read.csv("PK08.csv", skip=1)
+# setwd("D:/Gab (2)")
+
+dPK08 = read.csv("data-raw/PK08.csv", skip=1)
 colnames(dPK08) = c("TIME", "DV") ; dPK08
 
 Div = 100
-plot(DV ~ TIME, data=dPK08, type="o")
-plot(log(DV) ~ TIME, data=dPK08, type="o")
 
+png('figure1.png', type = 'cairo')
+plot(DV ~ TIME, data=dPK08, type="o")
+dev.off()
+
+png('figure2.png', type = 'cairo')
+plot(log(DV) ~ TIME, data=dPK08, type="o")
+dev.off()
 
 ##
 fPK08a = function(THETA) # biexponential

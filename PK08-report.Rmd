@@ -1,0 +1,26 @@
+---
+# bibliography: 'bib/manual.bib'
+output:
+  html_document:
+    keep_md: yes
+    toc: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+# PK08 - Two-compartment distribution models
+
+이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
+소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
+에디슨 앱은 <https://www.edison.re.kr/simulation> 에서 확인할 수 있습니다.
+
+```{r, code = readLines('R/PK08.R')}
+```
+
+## Figures
+
+![](figure1.png)
+
+![](figure2.png)
