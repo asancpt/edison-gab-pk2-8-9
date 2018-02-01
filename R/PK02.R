@@ -9,12 +9,12 @@ dPK02 = PK02
 
 ## Plot
 
-jpeg(file = 'figure1.png', type='cairo')
+jpeg(file = 'result/figure1.png', type='cairo')
 plot(DV2 ~ TIME, data=PK02, type="o")
 lines(DV ~ TIME, data=PK02, type="o", col="red")
 dev.off()
 
-jpeg(file = 'figure2.png', type = 'cairo')
+jpeg(file = 'result/figure2.png', type = 'cairo')
 plot(log(DV2) ~ TIME, data=PK02, type="o")
 lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
 dev.off()

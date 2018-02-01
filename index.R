@@ -18,9 +18,9 @@ libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'rmarkdown') # lapply(libr
 
 lapply(libraries, library, character.only = TRUE)
 
-render('README.Rmd', output_file = 'README.html')
+render('README.Rmd', output_file = 'result/README.html')
 
-system('cp README.html figure1.png figure2.png result')
+# system('cp README.html figure1.png figure2.png result')
 
 
 
