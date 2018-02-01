@@ -12,12 +12,12 @@ output:
 소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
 에디슨 앱은 <https://www.edison.re.kr/simulation> 에서 확인할 수 있습니다.
 
-```{r, code = readLines('R/PK02.R')}
+```{r, code = readLines('PK02.R')}
 ```
 
 ## Figures
-<!--
+
 ![](figure1.png)
 
 ![](figure2.png)
--->
+

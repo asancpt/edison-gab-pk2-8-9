@@ -15,18 +15,18 @@ if (length(intersect(dir(), 'result')) == 0) system('mkdir result')
 # setup ----
 
 libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'rmarkdown') # lapply(libraries, install.packages)
-
 lapply(libraries, library, character.only = TRUE)
+render('README.Rmd', output_file = 'README.html')
+system('cp README.html result')
 
-source('R/PK02.R')
+# system('cp R/PK02.R README.Rmd result')
+
+# setwd('./result')
+
+
+# system('rm result/*.R result/*.Rmd')
 
 # render('README.Rmd', output_file = 'result/README.html')
 
 # system('cp README.html figure1.png figure2.png result')
-
-
-
-
-
-
 
