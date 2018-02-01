@@ -1,32 +1,20 @@
-# library
-
-if (grepl('linux', R.version$os)) {
-  .libPaths(c("./lib", '/SYSTEM/R/3.3.3/lib64/R/library'))
-  print('libPaths() modified')
-}
-
-lapply(.libPaths(), dir)
+#!/SYSTEM/R/3.3.3/bin/Rscript
 
 library(magrittr)
 
-libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart')
+# init ----
 
-lapply(libraries, library, character.only = TRUE)
+if (grepl('linux', R.version$os)) .libPaths(c("./lib", '/SYSTEM/R/3.3.3/lib64/R/library')) %>% print()
 
-# lapply(libraries, install.packages)
-
-.libPaths() %>% 
-  map(dir) %>%
-  c() %>%
-  print()
+print(lapply(.libPaths(), dir))
 
 if (length(intersect(dir(), 'result')) == 0) system('mkdir result')
 
-# 
+# setup ----
 
-# library(dplyr)
-# library(purrr)
-# library(wnl)
-# library(NonCompart)
+libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'rmarkdown') # lapply(libraries, install.packages)
 
+lapply(libraries, library, character.only = TRUE)
+
+render('README.Rmd', output_file = 'result/README.html')
 

@@ -1,3 +1,19 @@
+---
+# bibliography: 'bib/manual.bib'
+output:
+  html_document:
+    keep_md: yes
+---
+
 # PK2- One-compartment oral dosing
 
+이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.
+
+
+```{r, code = readLines('R/PK02.R')}
+```
+
+![](result/test1.png)
+
+![](result/test2.png)
 
