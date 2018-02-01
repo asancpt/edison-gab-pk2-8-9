@@ -3,17 +3,21 @@
 output:
   html_document:
     keep_md: yes
+    toc: yes
 ---
 
 # PK2- One-compartment oral dosing
 
-이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.
+이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
 
+소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
 
 ```{r, code = readLines('R/PK02.R')}
 ```
 
-![](result/test1.png)
+## Figures
 
-![](result/test2.png)
+![](figure1.png)
+
+![](figure2.png)
 
