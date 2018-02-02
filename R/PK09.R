@@ -79,8 +79,8 @@ nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"),
      LB=c(0, 0.001, 0.001, 0, 0, 0, 0, 0),
      UB=c(30, 1, 2, 1, 1, 4, 1, 1))
 
-nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error="C")
-e$PE
+# nlr(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error="C")
+# e$PE
 
 wnl5(fPK09, dPK09, pNames=c("Ka", "Vc", "Vt", "Km", "Vmax", "Cld", "Tlag", "Fa"), IE=c(10, 0.4, 0.6, 0.3, 0.1, 2, 0.08, 0.5), Error="P")
 
