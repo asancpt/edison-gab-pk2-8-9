@@ -2,7 +2,6 @@ dPK08 = read.csv("data-raw/PK08.csv", skip=1)
 colnames(dPK08) = c("TIME", "DV") ; dPK08
 
 Div = 100
-
 png('figure1.png', type = 'cairo')
 plot(DV ~ TIME, data=dPK08, type="o")
 dev.off()
@@ -70,7 +69,7 @@ fPK08d = function(THETA) # Reparametrized Cl model
   return(Cp)
 }
 
-# nlr(fPK08d, dPK08, pNames=c("Cl", "alpha", "B", "beta"), IE=c(10, 2, 1, 0.1), Error="POIS") # fitting failure
+nlr(fPK08d, dPK08, pNames=c("Cl", "alpha", "B", "beta"), IE=c(10, 2, 1, 0.1), Error="POIS") # fitting failure
 nlr(fPK08d, dPK08, pNames=c("Cl", "alpha", "B", "beta"), IE=c(10, 2, 1, 0.1))
 wnl5(fPK08d, dPK08, pNames=c("Cl", "alpha", "B", "beta"), IE=c(10, 2, 1, 0.1), Error="POIS")
 

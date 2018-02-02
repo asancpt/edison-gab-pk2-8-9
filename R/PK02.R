@@ -1,25 +1,20 @@
-# source('index.R')
-
 PK02 = read.csv("data-raw/PK02.csv", skip=1)
 colnames(PK02) = c("TIME","DV")
-DV2 = c(4.7, 4.48, 4.22, 3.87, 3.57, 2.97, 2.25, 1.74, 1.02, 0.77, 0.61, 0.36, 0.2)
+DV2 = c(4.75, 4.43, 4.21, 3.81, 3.57, 3.28, 2.93, 2.21, 1.95, 1.72, 1.47 ,1.24, 1.02, 0.77, 0.61, 0.36, 0.2)
 PK02 = cbind(PK02, DV2)
 PK02
 dPK02 = PK02
+require(wnl)
 
 ## Plot
-
-# jpeg(file = 'result/figure1.png', type='cairo')
-# plot(DV2 ~ TIME, data=PK02, type="o")
-# lines(DV ~ TIME, data=PK02, type="o", col="red")
-# dev.off()
-# 
-# jpeg(file = 'result/figure2.png', type = 'cairo')
-# plot(log(DV2) ~ TIME, data=PK02, type="o")
-# lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
-# dev.off()
+plot(DV2 ~ TIME, data=PK02, type="o")
+lines(DV ~ TIME, data=PK02, type="o", col="red")
+dev.new()
+plot(log(DV2) ~ TIME, data=PK02, type="o")
+lines(log(DV) ~ TIME, data=PK02, type="o", col="red")
 
 ## NCA
+library(NonCompart)
 R1 = sNCA(PK02$TIME, PK02$DV2, dose=100, adm="Bolus", doseUnit="ug", timeUnit="min") ; R1
 R2 = sNCA(PK02$TIME, PK02$DV, dose=100, adm="Extravascular", doseUnit="ug", timeUnit="min") ; R2
 BA = R2["AUCIFO"]/R1["AUCIFO"]; BA * 100 # Absolute Bioavailability (BA)
@@ -68,4 +63,3 @@ Dose = 100
 colnames(PK02) = c("TIME", "DV", "DV2")
 nlr(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
 wnl5(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
-
