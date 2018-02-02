@@ -7,6 +7,8 @@ print(sessionInfo())
 
 # init ----
 
+library(magrittr)
+
 if (grepl('linux', R.version$os)) .libPaths(c("./lib", '/SYSTEM/R/3.3.3/lib64/R/library')) %>% print()
 print(lapply(.libPaths(), dir))
 if (length(intersect(dir(), 'result')) == 0) system('mkdir result')
