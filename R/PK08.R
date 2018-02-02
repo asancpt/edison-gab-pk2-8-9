@@ -1,5 +1,3 @@
-# setwd("D:/Gab (2)")
-
 dPK08 = read.csv("data-raw/PK08.csv", skip=1)
 colnames(dPK08) = c("TIME", "DV") ; dPK08
 
