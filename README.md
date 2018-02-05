@@ -1,4 +1,4 @@
-# Edison App: Gabrielsson Pharmacokinetics
+# Edison을 통한 비선형 약동학 회귀 분석과 simulation
 
 이 예제는 Pharmacokinetic and Pharmacodynamic Data Analysis 교과서의 예제입니다.  
 소스 코드는 [깃헙](https://github.com/asancpt/edison-gab)에 올라와 있습니다.
