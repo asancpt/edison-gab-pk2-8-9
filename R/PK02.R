@@ -38,8 +38,8 @@ fPK01 = function(THETA) # Prediction function
   return(cbind(F, H1))
 }
 
-nlr(fPK01, dPK02, pNames=c("Ka", "Ka", "V"), IE=c(0.05, 0.1, 30))
-wnl5(fPK01, dPK02, pNames=c("Ka", "Ka", "V"), IE=c(0.05, 0.1, 30))
+nlr(fPK01, dPK02, pNames=c("k", "Ka", "V"), IE=c(0.05, 0.1, 30))
+wnl5(fPK01, dPK02, pNames=c("k", "Ka", "V"), IE=c(0.05, 0.1, 30))
 
 ## Model with tlag
 fPK02 = function(THETA) # Prediction function
@@ -61,5 +61,5 @@ fPK02 = function(THETA) # Prediction function
 BA = 1
 Dose = 100
 colnames(PK02) = c("TIME", "DV", "DV2")
-nlr(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
-wnl5(fPK02, dPK02, pNames=c("Ka", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
+nlr(fPK02, dPK02, pNames=c("k", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))
+wnl5(fPK02, dPK02, pNames=c("k", "Ka", "V", "tlag"), IE=c(0.05, 0.1, 30, 20))

@@ -34,7 +34,7 @@ if (grepl('PK09', pk_number$value)) {knitr::knit('PK09-report.Rmd'); system('cp 
 
 markdownToHTML('report.md', "result/report.html", 
                options = c("toc", "mathjax"))
-system('cp result/figure1.png result/figure2.png ./')
+system('cp figure1.png figure2.png ./result')
 
 # system('cp report.md result') 
 # render('report.Rmd', output_file = 'report.html') 
