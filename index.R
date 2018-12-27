@@ -11,9 +11,10 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 library(readr)
+library(knitr)
+library(deSolve)
 library(wnl)
 library(NonCompart)
-library(knitr)
 
 # Arguments
 
