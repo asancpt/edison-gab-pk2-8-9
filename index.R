@@ -1,45 +1,48 @@
-#!/SYSTEM/R/3.3.3/bin/Rscript
+#!/SYSTEM/R/3.5.1/bin/Rscript
+# `simrc` should contain `module load gcc/5.3.0` and `module load R/3.5.1`
 
-Sys.setenv(RSTUDIO_PANDOC="/SYSTEM/pandoc/1.17.0.3/bin")
-print(Sys.getenv("RSTUDIO_PANDOC"))
-print(capabilities())
-print(sessionInfo())
-
-# init ----
-
-library(magrittr)
-
-if (grepl('linux', R.version$os)) .libPaths(c("./lib", '/SYSTEM/R/3.3.3/lib64/R/library')) %>% print()
-print(lapply(.libPaths(), dir))
-if (length(intersect(dir(), 'result')) == 0) system('mkdir result')
+if (length(intersect(dir(), 'result')) == 0) { system('mkdir result') }
+options(bitmapType='cairo')
 
 # libraries ----
 
-libraries <- c('dplyr', 'purrr', 'wnl', 'NonCompart', 'markdown') # lapply(libraries, install.packages)
-lapply(libraries, library, character.only = TRUE)
+if (Sys.info()['sysname'] == 'Linux') { .libPaths('./lib') }
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(readr)
+library(wnl)
+library(NonCompart)
+library(knitr)
 
-# Arguments ----
+# Arguments
 
-Args <- commandArgs(trailingOnly = TRUE) # SKIP THIS LINE IN R if you're testing!
-if (identical(Args, character(0))) Args <- c("-inp", "data-raw/input.deck")
-if (Args[1] == "-inp") pk_number <- read.table(Args[2], sep = '=') %>% select(param = 1, value = 2)
-pk_number
-pk_number$value
+input_deck <- 'number = PK02 ;
+'
+
+arguments <- commandArgs(trailingOnly = TRUE)
+if (length(arguments) == 0) { arguments <- c("-inp", input_deck, "-file", "TBD.csv") }
+
+table_args <- matrix(arguments, ncol = 2, byrow = TRUE) %>%
+  as_tibble() %>%
+  mutate(V1 = sub('-', '', V1)) %>%
+  spread(V1, V2) %>%
+  print()
+
+pk_number <- read_delim(table_args$inp, delim = '=', col_names = c('param', 'value')) %>% 
+  mutate_all(funs(trimws)) %>% 
+  mutate(value = sub(' ;', '', value)) %>% 
+  print()
 
 # Make a report ----
 
-if (grepl('PK02', pk_number$value)) {knitr::knit('PK02-report.Rmd'); system('cp PK02-report.md report.md')}
-if (grepl('PK08', pk_number$value)) {knitr::knit('PK08-report.Rmd'); system('cp PK08-report.md report.md')}
-if (grepl('PK09', pk_number$value)) {knitr::knit('PK09-report.Rmd'); system('cp PK09-report.md report.md')}
+knitr::knit2html(input = sprintf("%s-report.Rmd", pk_number$value), 
+                 output = "result/report.html", 
+                 options = c("toc", "mathjax"), 
+                 force_v1 = TRUE, 
+                 encoding = 'UTF-8')
 
-markdownToHTML('report.md', "result/report.html", 
-               options = c("toc", "mathjax"))
-system('cp figure1.png figure2.png ./result')
+system('cp -r figure result')
 
-# system('cp report.md result') 
-# render('report.Rmd', output_file = 'report.html') 
-# system('cp R/PK02.R report.Rmd result') 
-# setwd('./result') 
-# system('rm result/*.R result/*.Rmd')
-# render('report.Rmd', output_file = 'result/report.html')
-
+print(capabilities())
+print(sessionInfo())
